@@ -57,9 +57,9 @@ public class paciente {
     public String getTipo_de_cedula() { return this.tipo_de_cedula; }
     public String getLugarExpedicion() { return this.lugar_de_expedicion; }
     public String getNombre() { return this.nombre; }
-    public String getPrimerApellido() { return this.primer_apellido; }
-    public String getSegundoApellido() { return this.segundo_apellido; }
-    public Date getFechaNacimiento() { return this.fecha_de_nacimiento; }
+    public String getPrimer_apellido() { return this.primer_apellido; }
+    public String getSegundo_apellido() { return this.segundo_apellido; }
+    public Date getFecha_de_nacimiento() { return this.fecha_de_nacimiento; }
     public String getTipo_de_sangre() { return this.tipo_de_sangre; }
     public String getTelefono() { return this.telefono;}
     public String getCorreo() { return this.correo; }
@@ -70,12 +70,12 @@ public class paciente {
     public String getTelefono_ce() { return this.telefono_ce; }
     // Setters
     public void setPk_cedula(Integer pk_cedula) { this.pk_cedula = pk_cedula; }
-    public void setLugarExpedicion(String lugar_de_expedicion) { this.lugar_de_expedicion = lugar_de_expedicion; }
+    public void setLugar_de_expedicion(String lugar_de_expedicion) { this.lugar_de_expedicion = lugar_de_expedicion; }
     public void setTipo_de_cedula(String tipo_de_cedula) { this.tipo_de_cedula = tipo_de_cedula; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setPrimerApellido(String primer_apellido) { this.primer_apellido = primer_apellido; }
-    public void setSegundoApellido(String segundo_apellido) { this.segundo_apellido = segundo_apellido; }
-    public void setFechaNacimiento(Date fecha_de_nacimiento) {this.fecha_de_nacimiento = fecha_de_nacimiento; }
+    public void setPrimer_apellido(String primer_apellido) { this.primer_apellido = primer_apellido; }
+    public void setSegundo_apellido(String segundo_apellido) { this.segundo_apellido = segundo_apellido; }
+    public void setFecha_de_nacimiento(Date fecha_de_nacimiento) {this.fecha_de_nacimiento = fecha_de_nacimiento; }
     public void setTipo_de_sangre(String tipo_de_sangre) { this.tipo_de_sangre = tipo_de_sangre; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
     public void setCorreo(String correo) { this.correo = correo; }

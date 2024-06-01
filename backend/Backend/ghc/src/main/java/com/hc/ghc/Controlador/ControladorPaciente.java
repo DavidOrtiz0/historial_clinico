@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,20 +39,16 @@ public class ControladorPaciente {
     }
 
     @PostMapping("/guardar")
-    public boolean guardar(@ModelAttribute paciente entity) {
-        System.out.println(entity.getUsuario());
-        repositoriopaciente.save(entity);
-        return true;
-
-        /*boolean datosCompletos = 
+    public boolean guardar(@RequestBody paciente entity) {
+        boolean datosCompletos = 
         (
             entity.getPk_cedula() != null &&
             entity.getTipo_de_cedula() != null &&
             entity.getLugarExpedicion() != null &&
             entity.getNombre() != null &&
-            entity.getPrimerApellido() != null &&
-            entity.getSegundoApellido() != null &&
-            entity.getFechaNacimiento() != null &&
+            entity.getPrimer_apellido() != null &&
+            entity.getSegundo_apellido() != null &&
+            entity.getFecha_de_nacimiento() != null &&
             entity.getTipo_de_sangre() != null &&
             entity.getTelefono() != null &&
             entity.getCorreo() != null &&
@@ -67,11 +62,12 @@ public class ControladorPaciente {
         );
 
     if (datosCompletos) {
-        
+        repositoriopaciente.save(entity);
+        return true;
     } else {
         System.out.println("Datos incompletos.");
         return false;
-    }*/
+    }
     }
     
     
