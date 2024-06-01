@@ -1,0 +1,745 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/*Estilos Navegador y Icono*/
+.Navega nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(250, 248, 248);
+    position: relative;
+}
+
+.navegador1 li a {
+    font-weight: bold;
+  }
+  
+.logo-div {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+}
+
+.navegador1 {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navegador1 li {
+    margin-left: 20px;
+}
+
+.navegador1 li a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navegador1 li a:hover {
+    color: #4aacee;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navegador1 {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background-color: #1bafd480;
+        border: 3px solid #ffffff;
+        opacity: 0;
+        transform: translateY(-20px);
+        pointer-events: none;
+        z-index: 1000;
+    }
+
+    .navegador1.open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .navegador1 li {
+        margin: 10px 0;
+    }
+
+    .navegador1 li a {
+        font-size: 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 24px;
+        color: rgb(8, 13, 65);
+    }
+}
+
+/* menu desplegable (responsive)*/
+.menu-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+}
+
+/* Imagen de fondo */
+body {
+    background: url('img/cdc-uN8TV9Pw2ik-unsplash.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+main {
+    padding: 20px;
+    color: #333;
+}
+
+#content {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Estilos del Footer */
+footer {
+    background: rgba(255, 255, 255, 0.801);
+    color: rgb(0, 0, 0);
+    padding: 10px 0; /* Reducir padding */
+    text-align: center;
+}
+
+.footer__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px; /* Reducir padding */
+    margin-bottom: 10px; /* Ajustar margen inferior */
+}
+
+
+.footer__section {
+    flex: 1;
+    margin: 5px 0; /* Reducir margin */
+    min-width: 150px; /* Reducir el ancho mínimo */
+    padding: 0 10px; /* Añadir padding lateral */
+}
+
+.footer__section h4 {
+    margin-bottom: 5px; /* Reducir el margen inferior */
+    font-size: 16px; /* Reducir tamaño de fuente */
+}
+
+.footer__bar {
+    background: rgb(74, 172, 238);
+    padding: 5px 0; /* Reducir padding */
+    margin-top: 10px; /* Ajustar margen superior */
+    margin-bottom: 10px; /* Reducir margen inferior */
+}
+
+.footer__socials {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar elementos */
+    gap: 10px; /* Reducir espacio entre íconos */
+}
+
+.footer__socials a {
+    font-size: 20px; /* Reducir tamaño de íconos */
+    color: rgb(0, 0, 0); /* Color de íconos */
+    text-decoration: none;
+}
+
+.footer__socials a:hover {
+    opacity: 0.7;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer__content {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0; /* Reducir padding */
+    }
+
+    .footer__section {
+        margin: 10px 0;
+    }
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.login-container button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background-color: #0056b3;
+}
+
+.login-container p {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 15px;
+    }
+
+    .login-container h1 {
+        font-size: 1.5em;
+    }
+
+    .login-container input, .login-container button {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+#paciente-options,
+#admin-options,
+#medico-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#paciente-options button,
+#admin-options button,
+#medico-options button {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#paciente-options button:hover,
+#admin-options button:hover,
+#medico-options button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    #paciente-options,
+    #admin-options,
+    #medico-options {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    #paciente-options button,
+    #admin-options button,
+    #medico-options button {
+        width: calc(100% - 15px);
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    #admin-options,
+    #medico-options {
+        padding: 10px;
+        max-width: 95%;
+    }
+
+    #admin-options button,
+    #medico-options button {
+        width: calc(100% - 10px);
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+/* Modal styles crear HC */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h3 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.modal-buttons {
+    text-align: center;
+}
+
+.modal-buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-buttons button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container,
+    .modal-content {
+        width: 90%;
+    }
+}
+
+/* Modal Styles atender urgencia */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 60px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form Styles */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content form h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-content form label {
+    margin-top: 10px;
+}
+
+.modal-content form input,
+.modal-content form select,
+.modal-content form textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-content form button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-content form button:hover {
+    background-color: #218838;
+}
+
+.modal-content form .cancel {
+    background-color: #dc3545;
+}
+
+.modal-content form .cancel:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+    }
+
+    .modal-content form button {
+        font-size: 14px;
+    }
+}
+
+/*Styles para programador de citas*/
+#programador-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 30vh;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+    margin: auto;
+    max-width: 400px;
+    backdrop-filter: blur(10px); /* Añade desenfoque al fondo */
+}
+
+#programador-options h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333; /* Color del texto */
+}
+
+#programador-options button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    max-width: 200px;
+}
+
+#programador-options button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 600px) {
+    #programador-options {
+        padding: 10px;
+        max-width: 90%;
+    }
+
+    #programador-options h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    #programador-options button {
+        padding: 8px 16px;
+        max-width: 100%;
+    }
+}
+
+/*Modal Crear Usuario*/
+/* Estilos básicos para el modal */
+.Modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px; /* Ancho máximo */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Ancho del 90% para pantallas más pequeñas */
+        margin: 10% auto; /* Reducir el margen superior para pantallas pequeñas */
+        padding: 15px;
+    }
+
+    .close {
+        font-size: 24px; /* Tamaño de fuente más pequeño para el botón de cerrar */
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%; /* Ancho del 95% para pantallas muy pequeñas */
+        margin: 5% auto; /* Reducir aún más el margen superior */
+        padding: 10px;
+    }
+
+    .close {
+        font-size: 20px; /* Tamaño de fuente más pequeño para el botón de cerrar */
+    }
+
+    h2, h3 {
+        font-size: 18px; /* Reducir tamaño de fuente para títulos */
+    }
+
+    label, input, select, button {
+        font-size: 14px; /* Reducir tamaño de fuente para los demás elementos */
+    }
+}
+
+/* Estilos básicos para el modal de programar cita */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px; /* Ancho máximo */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.modal-buttons {
+    text-align: right;
+}
+
+.modal-buttons button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Ancho del 90% para pantallas más pequeñas */
+        margin: 10% auto; /* Reducir el margen superior para pantallas pequeñas */
+        padding: 15px;
+    }
+
+    .close {
+        font-size: 24px; /* Tamaño de fuente más pequeño para el botón de cerrar */
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%; /* Ancho del 95% para pantallas muy pequeñas */
+        margin: 5% auto; /* Reducir aún más el margen superior */
+        padding: 10px;
+    }
+
+    .close {
+        font-size: 20px; /* Tamaño de fuente más pequeño para el botón de cerrar */
+    }
+
+    h2, h3 {
+        font-size: 18px; /* Reducir tamaño de fuente para títulos */
+    }
+
+    label, input, select, button {
+        font-size: 14px; /* Reducir tamaño de fuente para los demás elementos */
+    }
+}
+
