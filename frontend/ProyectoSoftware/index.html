@@ -69,7 +69,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeCrearHCModal()">&times;</span>
         <h2>Crear Historia Clínica</h2>
-        <form id="crearHCForm" method="POST" action="tu-endpoint">
+        <form id="crearHCForm">
             <h3>Datos Personales</h3>
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
@@ -146,7 +146,7 @@
                 <input type="tel" id="numeroCelularEmergencia" name="numeroCelularEmergencia" required>
             </div>
             <div class="modal-buttons">
-                <button type="submit">Aceptar</button>
+                <button type="button" onclick="submitCrearHCForm()">Aceptar</button>
                 <button type="button" onclick="cancelCrearHCForm()">Cancelar</button>
             </div>
         </form>

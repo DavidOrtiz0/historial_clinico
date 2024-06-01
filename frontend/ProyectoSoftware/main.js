@@ -21,47 +21,119 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+class paciente
+{
+    constructor(pk_cedula, tipo_de_cedula, lugar_de_expedicion, nombre, primer_apellido, segundo_apellido, fecha_de_nacimiento, tipo_de_sangre, telefono, correo, direccion, alergias, nombre_ce, apellido_ce, telefono_ce, usuario, contrasena){
+        this.pk_cedula = pk_cedula;
+        this.tipo_de_cedula = tipo_de_cedula;
+        this.lugar_de_expedicion = lugar_de_expedicion;
+        this.nombre = nombre;
+        this.primer_apellido = primer_apellido;
+        this.segundo_apellido = segundo_apellido;
+        this.fecha_de_nacimiento = fecha_de_nacimiento;
+        this.tipo_de_sangre = tipo_de_sangre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.alergias = alergias;
+        this.nombre_ce = nombre_ce;
+        this.apellido_ce = apellido_ce;
+        this.telefono_ce = telefono_ce;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+    }
+}
+
 //Funciones para manejar el inicio de sección
-function login() {
+async function login()
+{
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const messageElement = document.getElementById('message');
 
-    const users = {
-        administrador: { password: 'admin123', message: 'Bienvenido Administrador' },
-        medico: { password: 'medico123', message: 'Bienvenido Medico' },
-        paciente: { password: 'paciente123', message: 'Bienvenido Paciente' },
-        programador: { password: 'programador123', message: 'Bienvenido Programador de Citas' }
+    urls = {
+        url_medico: 'http://localhost:8080/medico/sesion',
+        url_adm: 'http://localhost:8080/administrador/sesion',
+        url_paciente: 'http://localhost:8080/programadordecitas/sesion',
+        url_programador_de_citas: 'http://localhost:8080/paciente/sesion'
     };
 
-    if (users[username] && users[username].password === password) {
-        messageElement.textContent = users[username].message;
-        messageElement.style.color = 'green';
+	const adm = {
+		usuario: username,
+		contrasena: password
+	};
+    
+    const metodo = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(adm)
+    };
 
-        document.getElementById('login-section').style.display = 'none';
+    let numero = 0;
+    view(urls, metodo, numero);
+}
 
-        if (username === 'administrador') {
-            document.getElementById('admin-options').style.display = 'flex';
+async function peticion(url, metodo)
+{
+    let loginSuccess;
 
-        } else if (username === 'paciente') {
-            document.getElementById('paciente-options').style.display = 'block';  
-        } else if (username === 'programador') {
-            document.getElementById('programador-options').style.display = 'block';
-        } else if (username === 'medico') {
-            // Aquí iría la lógica para verificar si el médico tiene pacientes
-            const tienePacientes = true; // Esto se cambiará cuando se implemente la base de datos
-
-            if (tienePacientes) {
-                document.getElementById('medico-options').style.display = 'block';
-            } else {
-                alert('No hay citas por el momento.');
-                document.getElementById('login-section').style.display = 'block';
-            }
-        }
-    } else {
-        messageElement.textContent = 'Usuario o contraseña incorrectos';
-        messageElement.style.color = 'red';
+    try
+    {
+    const response = await fetch(url,metodo)
+    if (!response.ok) { throw new Error('Network response was not ok'); }
+        const data = await response.json
+        loginSuccess = data;
+        console.log('Login success:', loginSuccess);
+    return response.json();
+    }catch{
+        console.error("Error al iniciar sesion: ", error);
     }
+ 
+    return loginSuccess;
+}
+
+async function view(urls, metodo, clave)
+{
+    let iterar = Object.values(urls);
+    let respuesta = await peticion(iterar[clave], metodo);
+    let condicion = `${respuesta}-${clave}`;
+
+    console.info("el valor de iteracion es: ", iterar, " la clave es: ", clave, " la respuesta es: ", respuesta)
+    
+        switch(condicion)
+        {
+            case 'true-0':
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('medico-options').style.display = 'block';
+                break;
+            
+            case 'true-1':
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-options').style.display = 'flex';
+                break;
+
+            case 'true-2':
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('programador-options').style.display = 'block';
+                break;
+            
+            case 'true-3':
+                console.log("es un paciente");
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('paciente-options').style.display = 'flex';
+                break;
+
+            default:
+                if(condicion === 'false-3')
+                {
+                    const messageElement = document.getElementById('message');
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    messageElement.style.color = 'red';
+                    messageElement.textContent = 'Usuario o contraseña incorrectos';
+                }else{view(urls, metodo, clave+1);}
+        }
 }
 
 // Funciones para manejar el modal de crear HC
@@ -74,11 +146,66 @@ function closeCrearHCModal() {
     document.getElementById('crearHCForm').reset();
 }
 
-function submitCrearHCForm() {
+async function submitCrearHCForm() {
     const form = document.getElementById('crearHCForm');
     if (form.checkValidity()) {
-        alert('Historia Clínica creada');
-        closeCrearHCModal();
+        const nombre = document.getElementById("nombre").value;
+        const primer_apellido = document.getElementById("primerApellido").value;
+        const segundo_apellido = document.getElementById("segundoApellido").value;
+        const tipo_de_documento = document.getElementById("tipoDocumento").value;
+        const lugar_de_expedicion = document.getElementById("lugarExpedicion").value;
+        const pk_cedula = parseInt(document.getElementById("numeroDocumento").value);
+        const tipo_de_sangre = document.getElementById("tipoSangre").value;
+        const fecha_de_nacimiento = document.getElementById("fechaNacimiento").value;
+        const telefono = document.getElementById("numeroCelular").value;
+        const correo = document.getElementById("correo").value;
+        const direccion = document.getElementById("direccion").value;
+        const alergias = "ninguna";
+        const nombre_ce = document.getElementById("nombreEmergencia").value;
+        const apelliido_ce = document.getElementById("apellidoEmergencia").value;
+        const telefono_ce = document.getElementById("numeroCelularEmergencia").value;
+        const usuario = "paciente";
+        const contrasena = "777";
+
+        const pacient = new paciente
+        (
+            pk_cedula,
+            tipo_de_documento,
+            lugar_de_expedicion,
+            nombre,
+            primer_apellido,
+            segundo_apellido,
+            fecha_de_nacimiento,
+            tipo_de_sangre,
+            telefono,
+            correo,
+            direccion,
+            alergias,
+            nombre_ce,
+            apelliido_ce,
+            telefono_ce,
+            usuario,
+            contrasena
+        )
+        
+        const metodo = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pacient)
+        };
+
+        url = 'http://localhost:8080/paciente/guardar';
+
+        let respuesta = peticion(url,metodo);
+        respuesta.then(function(resultado)
+        {
+            if(resultado === true){
+                alert('Historia Clínica creada');
+                closeCrearHCModal();
+                }
+        }).catch(function(error){alert('Algo salio mal');});
     } else {
         alert('Por favor, complete todos los campos obligatorios');
     }
