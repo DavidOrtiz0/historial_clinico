@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,9 @@ import com.hc.ghc.modelo.paciente;
 import com.hc.ghc.repositorio.RepositorioPaciente;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -22,7 +26,7 @@ public class ControladorPaciente {
     @Autowired RepositorioPaciente repositoriopaciente;
 
     @PostMapping("/sesion")
-    public boolean obtener(@RequestBody Map<String, Object> sesion) {
+    public boolean iniciarSesion(@RequestBody Map<String, Object> sesion) {
         String usuario = (String) sesion.get("usuario");
         String contrasena = (String) sesion.get("contrasena");
         boolean respuesta = false;
@@ -39,7 +43,7 @@ public class ControladorPaciente {
     }
 
     @PostMapping("/guardar")
-    public boolean guardar(@RequestBody paciente entity) {
+    public boolean guardarPaciente(@RequestBody paciente entity) {
         boolean datosCompletos = 
         (
             entity.getPk_cedula() != null &&
@@ -68,6 +72,18 @@ public class ControladorPaciente {
         System.out.println("Datos incompletos.");
         return false;
     }
+    }
+    
+    @PostMapping("/consultar")
+    public paciente obtenerPaciente(@RequestBody Map<String, Integer> param) {
+        Integer cedula = (Integer) param.get("pk_cedula");
+        System.out.println(cedula);
+        paciente Paciente = repositoriopaciente.getReferenceById(cedula);
+        if (Paciente != null) {
+            return Paciente;
+        } else {
+            return null;
+        }
     }
     
     

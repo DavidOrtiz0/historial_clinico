@@ -282,9 +282,34 @@ function closeConsultarHCModal() {
     document.getElementById('hcActions').style.display = 'none';
 }
 
-function buscarHC() {
-    const cedula = document.getElementById('cedulaConsultar').value;
-    if (cedula === "") {
+async function buscarHC() {
+    const cedula = parseInt(document.getElementById('cedulaConsultar').value);
+    url='http://localhost:8080/paciente/consultar';
+    const datos = {pk_cedula:cedula}
+    const metodo = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify(datos)
+    };
+
+    peticion(url, metodo).then(
+            function(resultado)
+            {
+                document.getElementById('hcActions').style.display = 'block';
+                console.log(resultado);
+            }
+        ).catch(function(error)
+            {
+                alert('No existe ningún historial clínico asociado');
+                closeConsultarHCModal();
+                console.error(error);
+            });
+        
+    
+    /*if (cedula === "") {
         alert('Por favor, ingrese el número de cédula');
     } else {
         // Aquí iría la lógica para verificar si el HC existe en la base de datos
@@ -292,12 +317,11 @@ function buscarHC() {
         const hcExists = false;
 
         if (hcExists) {
-            document.getElementById('hcActions').style.display = 'block';
+            
         } else {
-            alert('No existe ningún historial clínico asociado');
-            closeConsultarHCModal();
+            
         }
-    }
+    }*/
 }
 
 function modificarHC() {

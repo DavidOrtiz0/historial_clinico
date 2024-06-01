@@ -2,6 +2,8 @@ package com.hc.ghc.modelo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,6 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "paciente")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class paciente {
     @Id @Column(name = "pk_cedula")private Integer pk_cedula;
     @Column(name = "tipo_de_cedula")private String tipo_de_cedula;
