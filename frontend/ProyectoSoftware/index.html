@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital</title>
+    <link rel="icon" href="img/logoSanFelix.png">
+    <link rel="stylesheet" href="estilos.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <!--Sección Menu-->
+    <section class="Navega">
+    <nav>
+        <div class="logo-div">
+            <img src="img/logoSanFelix.png" class="logo">
+           </div>
+        <ul class="navegador1" id="nav1">
+            <li><a href="#">Inicio</a></li>
+          </ul>
+          <div class="menu-toggle" id="menuBtn">
+            <i class="ri-menu-3-line" id="menuBtnIcon"></i>
+        </div>
+    </nav>
+</section>
+
+<main>
+    <!-- Contenido principal de la página -->
+    <section id="content">
+        <div class="login-container" id="login-section">
+            <h1>Iniciar Sesión</h1>
+            <input type="text" id="username" placeholder="Usuario">
+            <input type="password" id="password" placeholder="Contraseña">
+            <button onclick="login()">Ingresar</button>
+            <p id="message"></p>
+        </div>
+        <div id="admin-options" style="display: none;">
+            <h1>Bienvenido Administrador!</h1>
+            <button onclick="openCrearHCModal()">Crear Paciente</button>
+            <button onclick="openCrearUsuarioModal()">Crear Usuario</button>
+            <button onclick="openConsultarHCModal()">Consultar HC</button>
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div>
+        <div id="medico-options" style="display: none;">
+            <h2>Bienvenido, Medico</h2>
+            <div id="pacientes">
+                <p>Nombre del Paciente <button onclick="verHC()">Ver Historial Clínico</button></p>
+            </div>
+            <button onclick="openConsultarHCModal()">Consultar HC</button>
+            <button onclick="openAtenderUrgenciasModal()">Atender Urgencias</button>
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div>
+        <div id="programador-options" style="display: none;">
+            <h1>Bienvenido Programador de Citas!</h1>
+            <button onclick="openIngresarDocumentoSection()">Programar Cita</button>
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div> 
+        <div id="paciente-options" style="display: none;">
+            <h1>Bienvenido Paciente</h1>
+            <button onclick="openConsultarHCModal()">Consultar HC</button>
+             <button onclick="logout()">Cerrar Sesión</button>
+        </div>   
+    </section>
+</main>
+
+ <!-- Modal for Crear HC -->
+<div id="crearHCModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCrearHCModal()">&times;</span>
+        <h2>Crear Historia Clínica</h2>
+        <form id="crearHCForm" method="POST" action="tu-endpoint">
+            <h3>Datos Personales</h3>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="primerApellido">Primer Apellido:</label>
+                <input type="text" id="primerApellido" name="primerApellido" required>
+            </div>
+            <div class="form-group">
+                <label for="segundoApellido">Segundo Apellido:</label>
+                <input type="text" id="segundoApellido" name="segundoApellido" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoDocumento">Tipo de Documento:</label>
+                <select id="tipoDocumento" name="tipoDocumento" required>
+                    <option value="">Seleccione...</option>
+                    <option value="cedula">Cédula</option>
+                    <option value="tarjetaIdentidad">Tarjeta de Identidad</option>
+                    <option value="registroCivil">Registro Civil</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="lugarExpedicion">Lugar de Expedición:</label>
+                <input type="text" id="lugarExpedicion" name="lugarExpedicion" required>
+            </div>
+            <div class="form-group">
+                <label for="numeroDocumento">Número de Documento:</label>
+                <input type="text" id="numeroDocumento" name="numeroDocumento" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoSangre">Tipo de Sangre:</label>
+                <select id="tipoSangre" name="tipoSangre" required>
+                    <option value="">Seleccione...</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+            </div>
+            <h3>Contacto</h3>
+            <div class="form-group">
+                <label for="numeroCelular">Número Celular:</label>
+                <input type="tel" id="numeroCelular" name="numeroCelular" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required>
+            </div>
+            <hr>
+            <h3>Contacto de Emergencia</h3>
+            <div class="form-group">
+                <label for="nombreEmergencia">Nombre:</label>
+                <input type="text" id="nombreEmergencia" name="nombreEmergencia" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidoEmergencia">Apellido:</label>
+                <input type="text" id="apellidoEmergencia" name="apellidoEmergencia" required>
+            </div>
+            <div class="form-group">
+                <label for="numeroCelularEmergencia">Número Celular:</label>
+                <input type="tel" id="numeroCelularEmergencia" name="numeroCelularEmergencia" required>
+            </div>
+            <div class="modal-buttons">
+                <button type="submit">Aceptar</button>
+                <button type="button" onclick="cancelCrearHCForm()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal Crear Usuario -->
+<div id="CrearUsuarioModal" class="Modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCrearUsuarioModal()">&times;</span>
+      <h2>Crear Usuario:</h2>
+      <form id="CrearUsuarioForm">
+          <h3>Datos de Usuario</h3>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required>
+          <label for="tipoDocumento">Tipo de Documento:</label>
+          <select id="tipoDocumento" required>
+              <option value="">Seleccione...</option>
+              <option value="cedula">Cédula</option>
+              <option value="tarjetaIdentidad">Tarjeta de Identidad</option>
+              <option value="registroCivil">Registro Civil</option>
+          </select>
+          <label for="numeroDocumento">Número de Documento:</label>
+          <input type="text" id="numeroDocumento" required>
+          <h3>Asignar Usuario y Contraseña</h3>
+          <label for="usuario">Asignar Usuario</label>
+          <input type="text" id="usuario" required>
+          <label for="password">Asignar Contraseña</label>
+          <input type="password" id="password" required>
+          <button type="button" onclick="submitCrearUsuarioForm()">Aceptar</button>
+          <button type="button" onclick="cancelCrearUsuarioForm()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+ <!-- Modal para atender urgencias -->
+<div id="atenderUrgenciasModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAtenderUrgenciasModal()">&times;</span>
+        <h2>Atender Urgencias</h2>
+        <form id="atenderUrgenciasForm">
+            <h3>Datos Personales</h3>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" required>
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" required>
+            <label for="tipoSangre">Tipo de Sangre:</label>
+            <select id="tipoSangre" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+            <h3>Datos de Contacto</h3>
+            <label for="celular">Celular:</label>
+            <input type="text" id="celular" required>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" required>
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" required>
+            <h3>Datos de Contacto de Emergencia</h3>
+            <label for="nombreEmergencia">Nombre:</label>
+            <input type="text" id="nombreEmergencia" required>
+            <label for="apellidoEmergencia">Apellido:</label>
+            <input type="text" id="apellidoEmergencia" required>
+            <label for="numeroEmergencia">Número:</label>
+            <input type="text" id="numeroEmergencia" required>
+            <h3>Tipo de Urgencia</h3>
+            <label for="tipoUrgencia">Tipo:</label>
+            <select id="tipoUrgencia" required>
+                <option value="Clase A">Clase A</option>
+                <option value="Clase B">Clase B</option>
+                <option value="Clase C">Clase C</option>
+            </select>
+            <label for="descripcionUrgencia">Descripción:</label>
+            <textarea id="descripcionUrgencia" required></textarea>
+            <label for="condicionUrgencia">Condición:</label>
+            <textarea id="condicionUrgencia" required></textarea>
+            <button type="button" onclick="submitAtenderUrgenciasForm()">Enviar</button>
+            <button type="button" class="cancel" onclick="closeAtenderUrgenciasModal()">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+ <!-- Modal for Consultar HC -->
+ <div id="consultarHCModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeConsultarHCModal()">&times;</span>
+        <h2>Consultar Historia Clínica</h2>
+        <form id="consultarHCForm">
+            <div class="form-group">
+                <label for="cedulaConsultar">Número de Cédula:</label>
+                <input type="text" id="cedulaConsultar" required>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" onclick="buscarHC()">Buscar</button>
+            </div>
+            <div id="hcActions" style="display: none;">
+                <h3>¿Qué desea hacer con la HC?</h3>
+                <button onclick="modificarHC()">Modificar</button>
+                <button onclick="verHC()">Consultar</button>
+                <button onclick="eliminarHC()">Eliminar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Sección para ingresar número de documento en Programar Cita -->
+<div id="ingresarDocumentoSection" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeIngresarDocumentoSection()">&times;</span>
+        <h2>Ingrese su número de documento</h2>
+        <form id="numeroDocumentoForm">
+            <label for="numeroDocumentoInput">Número de Documento:</label>
+            <input type="text" id="numeroDocumentoInput" required>
+            <div class="modal-buttons">
+                <button type="button" onclick="verificarDocumento()">Ingresar</button>
+                <button type="button" onclick="cancelIngresarDocumentoSection()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para programar cita -->
+<div id="programarCitaModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeProgramarCitaModal()">&times;</span>
+        <h2>Programar Cita</h2>
+        <form id="programarCitaForm">
+            <div class="form-group">
+                <label for="tipoConsulta">Tipo de Consulta:</label>
+                <select id="tipoConsulta" required>
+                    <option value="">Seleccione...</option>
+                    <option value="citaProgramada">Cita Programada</option>
+                    <option value="citaPrioritaria">Cita Prioritaria</option>
+                    <option value="urgencia">Urgencia</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fechaHora">Fecha y Hora:</label>
+                <input type="datetime-local" id="fechaHora" required>
+            </div>
+            <div class="form-group">
+                <label for="paciente">Paciente:</label>
+                <input type="text" id="paciente" readonly>
+            </div>
+            <div class="form-group">
+                <label for="medico">Médico:</label>
+                <input type="text" id="medico" required>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" onclick="submitProgramarCitaForm()">Aceptar</button>
+                <button type="button" onclick="cancelProgramarCitaForm()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Footer-->
+<section>
+<footer>
+    <div class="footer__content">
+        <div class="footer__section">
+            <h4>Dirección</h4>
+            <p>Centro, La Dorada, Caldas, Colombia</p>
+        </div>
+        <div class="footer__section">
+            <h4>Grupo</h4>
+            <p>David</p>
+            <p>Cristian</p>
+            <p>Lesly</p>
+            <p>Michel</p>
+        </div>
+        <div class="footer__section">
+            <h4>Contacto</h4>
+            <p>email@example.com</p>
+            <p>+123 456 789</p>
+        </div>
+    </div>
+    <div class="footer__bar">
+        <p style="color: #000000;">SanFelix © 2024 GestionProyectoSoftware. Quinto Semestre.</p>
+        <div class="footer__socials">
+            <a href="https://twitter.com/JokerDown_?t=OcQrVByZdVAQ1msXpAJ3ZQ&s=09" style="color: #117596;"><i class="ri-twitter-fill"></i></a>
+            <a href="#" style="color: #fc0707;"><i class="ri-google-fill"></i></a>
+            <a href="https://www.instagram.com/miichellcaviedes?igsh=ZzlvaGZ0c2Zldnhs" style="color: aliceblue;"><i class="ri-instagram-fill"></i></a>
+            <a href="https://www.facebook.com/share/aD65iZReBkYFYNf4/?mibextid=qi2Omg" style="color: #070868;"><i class="ri-facebook-fill"></i></a>
+        </div>
+    </div>
+</footer>
+</section>
+
+<script src="main.js"></script>
+</body>
+</html>
