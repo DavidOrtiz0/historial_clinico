@@ -9,19 +9,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "administrador")
 
-public class administrador {
-    @Id
-    @Column(name = "pk_id_administrador")
-    private Integer pk_id_administrador;
+public class administrador 
+{
 
-    @Column(name = "nombre")
-    private String nombre;
-
-    @Column(name = "usuario")
-    private String usuario;
-
-    @Column(name = "contrasena")
-    private String contrasena;
+    @Id @Column(name = "pk_id_administrador") private Integer pk_id_administrador;
+    @Column(name = "nombre") private String nombre;
+    @Column(name = "usuario") private String usuario;
+    @Column(name = "contrasena") private String contrasena;
 
     public administrador(){ }
 
@@ -33,19 +27,15 @@ public class administrador {
         this.contrasena = contrasena;
     }
 
-    public Integer Getpk_id(){ return this.pk_id_administrador; }
+    //Getters
+    public Integer getPk_id_administrador(){ return this.pk_id_administrador; }
+    public String getNombre(){ return this.nombre; }
+    public String getUsuario(){ return this.usuario; }
+    public String getContrasena(){ return this.contrasena; }
 
-    public void Setpk_id(Integer pk_id_administrador){ this.pk_id_administrador = pk_id_administrador; }
-
-    public String Getnombre(){ return this.nombre; }
-
-    public void Setnombre(String nombre){ this.nombre = nombre; }
-
-    public String Getusuario(){ return this.usuario; }
-
-    public void Setusuario(String usuario){ this.usuario = usuario; }
-
-    public String Getcontrasena(){ return this.contrasena; }
-
-    public void Setcontrasena(String contrasena){ this.contrasena = contrasena; }
+    //Setters
+    public void setPk_id_administrador(Integer pk_id_administrador){ this.pk_id_administrador = pk_id_administrador; }
+    public void setNombre(String nombre){ this.nombre = nombre; }
+    public void setUsuario(String usuario){ this.usuario = usuario; }
+    public void setContrasena(String contrasena){ this.contrasena = contrasena; }
 }

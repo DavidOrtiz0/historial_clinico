@@ -31,7 +31,7 @@ public class ControladorAdministrador {
         List<administrador> administradores = repositorio_admin.findAll();
 
         for(administrador adm: administradores){
-            if (adm.Getusuario().equals(usuario)  && adm.Getcontrasena().equals(contrasena) ){
+            if (adm.getUsuario().equals(usuario)  && adm.getContrasena().equals(contrasena) ){
                 respuesta = true;
             }
         }

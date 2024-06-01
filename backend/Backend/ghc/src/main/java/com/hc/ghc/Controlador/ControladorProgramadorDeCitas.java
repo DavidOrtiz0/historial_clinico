@@ -31,8 +31,7 @@ public class ControladorProgramadorDeCitas{
         List<programadordecitas> programadorcitas = repositorioprogramadordecitas.findAll();
 
         for(programadordecitas programador: programadorcitas){
-            if (programador.Getusuario().equals(usuario)  && programador.Getcontrasena().equals(contrasena) ){
-                System.out.println(programador.Getcontrasena());
+            if (programador.getUsuario().equals(usuario)  && programador.getContrasena().equals(contrasena) ){
                 respuesta = true;
             }
         }

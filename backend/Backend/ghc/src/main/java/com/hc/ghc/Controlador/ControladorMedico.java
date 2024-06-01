@@ -30,8 +30,8 @@ public class ControladorMedico {
         List<Medico> medicos = repositorio_medico.findAll();
 
         for(Medico medico: medicos){
-            if (medico.Getusuario().equals(usuario)  && medico.Getcontrasena().equals(contrasena) ){
-                System.out.println(medico.Getcontrasena());
+            if (medico.getUsuario().equals(usuario)  && medico.getContrasena().equals(contrasena) ){
+                System.out.println(medico.getContrasena());
                 respuesta = true;
             }
         }
