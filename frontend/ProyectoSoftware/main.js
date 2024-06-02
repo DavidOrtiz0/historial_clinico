@@ -21,9 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-class paciente
+class Paciente
 {
-    constructor(pk_cedula, tipo_de_cedula, lugar_de_expedicion, nombre, primer_apellido, segundo_apellido, fecha_de_nacimiento, tipo_de_sangre, telefono, correo, direccion, alergias, nombre_ce, apellido_ce, telefono_ce, usuario, contrasena){
+    constructor(pk_cedula, tipo_de_cedula, lugar_de_expedicion, nombre, primer_apellido, segundo_apellido, fecha_de_nacimiento, tipo_de_sangre, telefono, correo, direccion, alergias, nombre_ce, apellido_ce, telefono_ce, usuario, contrasena)
+    {
         this.pk_cedula = pk_cedula;
         this.tipo_de_cedula = tipo_de_cedula;
         this.lugar_de_expedicion = lugar_de_expedicion;
@@ -44,6 +45,32 @@ class paciente
     }
 }
 
+class Medico
+{
+    constructor(pk_id_medico, nombre, usuario, contrasena, especializacion)
+    {
+        this.pk_id_medico = pk_id_medico;
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.especializacion = especializacion;
+    }
+}
+
+class Cita
+{
+    constructor(pk_id_cita, fk_paciente, fk_medico, fk_programadorCitas, fecha, hora, tipo_de_cita)
+    {
+        this.pk_id_cita = pk_id_cita;
+        this.fk_paciente = fk_paciente;
+        this.fk_medico = fk_medico;
+        this.fk_programadorCitas = fk_programadorCitas;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.tipo_de_cita = tipo_de_cita;
+    }
+}
+
 //Funciones para manejar el inicio de sección
 async function login()
 {
@@ -61,42 +88,66 @@ async function login()
 		usuario: username,
 		contrasena: password
 	};
-    
+
+    let numero = 0;
+    view(urls, numero, adm);
+}
+
+async function peticion(url, datos)
+{
+    let loginSuccess;
+
     const metodo = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(adm)
+        body: JSON.stringify(datos)
     };
-
-    let numero = 0;
-    view(urls, metodo, numero);
-}
-
-async function peticion(url, metodo)
-{
-    let loginSuccess;
 
     try
     {
-    const response = await fetch(url,metodo)
-    if (!response.ok) { throw new Error('Network response was not ok'); }
-        const data = await response.json
+        const response = await fetch(url,metodo)
+        if (!response.ok) { throw new Error('Network response was not ok'); }
+        const data = await response.json();
         loginSuccess = data;
-        console.log('Login success:', loginSuccess);
-    return response.json();
-    }catch{
-        console.error("Error al iniciar sesion: ", error);
+        console.log('Datos obtenidos: ', loginSuccess);
+        return loginSuccess;
+    }catch
+    {
+        console.error("Error al realizar la accion: ", error);
     }
- 
-    return loginSuccess;
 }
 
-async function view(urls, metodo, clave)
+async function peticion_get(url)
+{
+    let loginSuccess;
+
+    const metodo = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+
+    try
+    {
+        const response = await fetch(url,metodo)
+        if (!response.ok) { throw new Error('Network response was not ok'); }
+        const data = await response.json();
+        loginSuccess = data;
+        console.log('Datos obtenidos: ', loginSuccess);
+        return loginSuccess;
+    }catch
+    {
+        console.error("Error al realizar la accion: ", error);
+    }
+}
+
+async function view(urls, clave, datos_sesion)
 {
     let iterar = Object.values(urls);
-    let respuesta = await peticion(iterar[clave], metodo);
+    let respuesta = await peticion(iterar[clave], datos_sesion);
     let condicion = `${respuesta}-${clave}`;
 
     console.info("el valor de iteracion es: ", iterar, " la clave es: ", clave, " la respuesta es: ", respuesta)
@@ -132,7 +183,7 @@ async function view(urls, metodo, clave)
                     document.getElementById('password').value = '';
                     messageElement.style.color = 'red';
                     messageElement.textContent = 'Usuario o contraseña incorrectos';
-                }else{view(urls, metodo, clave+1);}
+                }else{view(urls, clave+1, datos_sesion);}
         }
 }
 
@@ -167,7 +218,7 @@ async function submitCrearHCForm() {
         const usuario = "paciente";
         const contrasena = "777";
 
-        const pacient = new paciente
+        const pacient = new Paciente
         (
             pk_cedula,
             tipo_de_documento,
@@ -186,19 +237,11 @@ async function submitCrearHCForm() {
             telefono_ce,
             usuario,
             contrasena
-        )
-        
-        const metodo = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pacient)
-        };
+        );
 
         url = 'http://localhost:8080/paciente/guardar';
 
-        let respuesta = peticion(url,metodo);
+        let respuesta = peticion(url,pacient);
         respuesta.then(function(resultado)
         {
             if(resultado === true){
@@ -284,22 +327,14 @@ function closeConsultarHCModal() {
 
 async function buscarHC() {
     const cedula = parseInt(document.getElementById('cedulaConsultar').value);
-    url='http://localhost:8080/paciente/consultar';
+    url='http://localhost:8080/paciente/obtener';
     const datos = {pk_cedula:cedula}
-    const metodo = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
 
-        body: JSON.stringify(datos)
-    };
-
-    peticion(url, metodo).then(
+    peticion(url, datos).then(
             function(resultado)
             {
                 document.getElementById('hcActions').style.display = 'block';
-                console.log(resultado);
+                //console.log(resultado);
             }
         ).catch(function(error)
             {
@@ -307,21 +342,20 @@ async function buscarHC() {
                 closeConsultarHCModal();
                 console.error(error);
             });
-        
     
-    /*if (cedula === "") {
-        alert('Por favor, ingrese el número de cédula');
-    } else {
-        // Aquí iría la lógica para verificar si el HC existe en la base de datos
-        // Como aún no está implementado, siempre diremos que no existe
-        const hcExists = false;
+    urlc='http://localhost:8080/cita/obtener';
 
-        if (hcExists) {
-            
-        } else {
-            
-        }
-    }*/
+    peticion(urlc, datos)
+    .then(
+        function(resultado)
+        {
+            console.log(resultado);
+        })
+    .catch(function(error){
+            console.error("EL error es: ",error);
+            alert('F en el chat');
+            closeConsultarHCModal();
+        });
 }
 
 function modificarHC() {
@@ -345,12 +379,40 @@ function closeIngresarDocumentoSection() {
     document.getElementById('ingresarDocumentoSection').style.display = 'none';
     document.getElementById('numeroDocumentoForm').reset();
 }
-
+let Paciente_cedula = null;
+let Medico_datos = null;
 function verificarDocumento() {
-    const numeroDocumentoInput = document.getElementById('numeroDocumentoInput').value;
-    const numeroDocumentoExistente = '12345678'; // Número de documento ficticio para validación
+    const numeroDocumentoInput = parseInt(document.getElementById('numeroDocumentoInput').value);
+    const datos = {pk_cedula:numeroDocumentoInput}
 
-    if (numeroDocumentoInput === numeroDocumentoExistente) {
+    const url='http://localhost:8080/paciente/consultar';
+    const urlm= 'http://localhost:8080/medico/obtener'
+
+    const numeroDocumentoExistente = peticion(url, datos).then(
+        function(resultado)
+        {
+            console.log(resultado);
+            Paciente_cedula = resultado;
+        }
+    ).catch(function(error)
+        {
+            alert('Nooooooooooooooooooooooooooooo');
+            closeIngresarDocumentoSection();
+            console.error(error);
+        });
+
+        peticion_get(urlm).then(
+            function(resultado)
+            {
+                console.log(resultado);
+                Medico_datos = resultado;
+            }
+        ).catch(function(error)
+            {
+                console.error(error);
+            });
+
+    if (numeroDocumentoInput !== false) {
         document.getElementById('paciente').value = "Datos del paciente"; // Aquí irían los datos reales
         closeIngresarDocumentoSection();
         openProgramarCitaModal();
@@ -373,11 +435,51 @@ function closeProgramarCitaModal() {
     document.getElementById('programarCitaForm').reset();
 }
 
-function submitProgramarCitaForm() {
+async function submitProgramarCitaForm() {
     const form = document.getElementById('programarCitaForm');
     if (form.checkValidity()) {
-        alert('Cita programada');
-        closeProgramarCitaModal();
+        const tipo_de_cita = document.getElementById("tipoConsulta").value;
+
+        const fecha_hora = document.getElementById("fechaHora").value;
+        if (typeof fecha_hora === 'string' && fecha_hora.includes('T')) {
+            const [fecha, hora] = fecha_hora.split('T');
+            console.log('Fecha:', fecha);
+            console.log('Hora:', hora);
+            // Usa `fecha` y `hora` como necesites
+
+            const fk_medico = 1;
+            const fk_paciente = BigInt(Paciente_cedula);
+            const pk_id_cita = 1;
+            const fk_programadorCitas = 1;
+            const cita = new Cita
+            (
+                pk_id_cita,
+                fk_paciente,
+                fk_medico,
+                fk_programadorCitas,
+                fecha,
+                hora,
+                tipo_de_cita
+            );
+
+            peticion(url, cita).then(
+                function(resultado)
+                {
+                    console.log(resultado);
+                }
+            ).catch(function(error)
+                {
+                    console.error(error);
+                });
+
+            alert('Cita programada');
+            closeProgramarCitaModal();
+        } else {
+            console.error('Fecha y hora no válidas:', fecha_hora);
+            alert('Por favor, seleccione una fecha y hora válidas.');
+        }
+        
+        
     } else {
         alert('Por favor, complete todos los campos obligatorios');
     }

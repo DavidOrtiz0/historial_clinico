@@ -34,7 +34,6 @@ public class ControladorPaciente {
         List<Paciente> pacientes = repositoriopaciente.findAll();
         for(Paciente pacient: pacientes){
             if (pacient.getUsuario().equals(usuario)  && pacient.getContrasena().equals(contrasena) ){
-                System.out.println(pacient.getContrasena());
                 respuesta = true;
             }
         }
@@ -58,7 +57,6 @@ public class ControladorPaciente {
     @PostMapping("/obtener")
     public Paciente obtenerPaciente(@RequestBody Map<String, Integer> param) {
         Integer cedula = (Integer) param.get("pk_cedula");
-        System.out.println(cedula);
         Paciente Paciente = repositoriopaciente.getReferenceById(cedula);
         if (Paciente != null) {
             return Paciente;
@@ -70,7 +68,6 @@ public class ControladorPaciente {
     @PostMapping("/consultar")
     public boolean verificarPaciente(@RequestBody Map<String, Integer> param) {
         Integer cedula = (Integer) param.get("pk_cedula");
-        System.out.println(cedula);
         Paciente Paciente = repositoriopaciente.getReferenceById(cedula);
         if (Paciente != null) {
             return true;
