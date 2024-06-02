@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hc.ghc.modelo.Medico;
 import com.hc.ghc.repositorio.RepositorioMedico;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/medico")
@@ -38,5 +40,12 @@ public class ControladorMedico {
         
         return respuesta;
     }
+
+    @GetMapping("/obtener")
+    public List<Medico> getMethodName() {
+        List<Medico> medicos = repositorio_medico.findAll();
+        return medicos; 
+    }
+    
     
 }

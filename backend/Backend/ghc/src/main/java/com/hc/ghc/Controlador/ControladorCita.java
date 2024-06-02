@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hc.ghc.modelo.Cita;
 import com.hc.ghc.repositorio.RepositorioCita;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +22,12 @@ public class ControladorCita {
     @Autowired RepositorioCita repositorioCita;
 
     @PostMapping("/guardar")
-    public String postMethodName(@RequestBody String entity) {
+    public boolean postMethodName(@RequestBody Cita entity) {
         if(entity.equals(null)){
-            return "es nulo";
+            return false;
         }else{
-            return "no es nulo";
+            repositorioCita.save(entity);
+            return false;
         }
         
     }
