@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "medico")
 public class Medico {
-    @Id @Column(name = "pk_id_medico") private Integer pk_id_medico;
+    @Id @Column(name = "pk_id_medico") private Long pk_id_medico;
     @Column(name = "nombre") private String nombre;
     @Column(name = "usuario") private String usuario;
     @Column(name = "contrasena") private String contrasena;
@@ -16,7 +16,7 @@ public class Medico {
 
     public Medico(){ }
 
-    public Medico(Integer pk_id_medico, String nombre, String usuario, String contrasena, String especializacion){
+    public Medico(Long pk_id_medico, String nombre, String usuario, String contrasena, String especializacion){
         this.pk_id_medico = pk_id_medico;
         this.nombre = nombre;
         this.usuario = usuario;
@@ -28,12 +28,12 @@ public class Medico {
     public String getUsuario(){ return this.usuario; }
     public String getContrasena(){ return this.contrasena; }
     public String getNombre() { return this.nombre; }
-    public Integer getPk_id_medico() { return this.pk_id_medico; }
+    public Long getPk_id_medico() { return this.pk_id_medico; }
 
     //Setters
     public void setUsuario(String usuario) { this.usuario = usuario; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setPk_id_programadordecitas(Integer pk_id_medico) { this.pk_id_medico = pk_id_medico; }
+    public void setPk_id_programadordecitas(Long pk_id_medico) { this.pk_id_medico = pk_id_medico; }
 
 }

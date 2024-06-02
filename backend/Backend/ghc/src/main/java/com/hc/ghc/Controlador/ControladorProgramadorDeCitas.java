@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hc.ghc.repositorio.RepositorioProgramadorDeCitas;
 
-import com.hc.ghc.modelo.programadordecitas;
+import com.hc.ghc.modelo.Programadordecitas;
 
 @RestController
 @RequestMapping("/programadordecitas")
@@ -28,9 +28,9 @@ public class ControladorProgramadorDeCitas{
         String contrasena = (String) sesion.get("contrasena");
         boolean respuesta = false;
 
-        List<programadordecitas> programadorcitas = repositorioprogramadordecitas.findAll();
+        List<Programadordecitas> programadorcitas = repositorioprogramadordecitas.findAll();
 
-        for(programadordecitas programador: programadorcitas){
+        for(Programadordecitas programador: programadorcitas){
             if (programador.getUsuario().equals(usuario)  && programador.getContrasena().equals(contrasena) ){
                 respuesta = true;
             }

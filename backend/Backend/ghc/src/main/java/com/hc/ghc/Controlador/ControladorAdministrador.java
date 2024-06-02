@@ -2,7 +2,7 @@ package com.hc.ghc.Controlador;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hc.ghc.modelo.administrador;
+import com.hc.ghc.modelo.Administrador;
 import com.hc.ghc.repositorio.RepositorioAdministrador;
 import java.util.Map;
 import java.util.List;
@@ -28,9 +28,9 @@ public class ControladorAdministrador {
         String contrasena = (String) sesion.get("contrasena");
         boolean respuesta = false;
 
-        List<administrador> administradores = repositorio_admin.findAll();
+        List<Administrador> administradores = repositorio_admin.findAll();
 
-        for(administrador adm: administradores){
+        for(Administrador adm: administradores){
             if (adm.getUsuario().equals(usuario)  && adm.getContrasena().equals(contrasena) ){
                 respuesta = true;
             }

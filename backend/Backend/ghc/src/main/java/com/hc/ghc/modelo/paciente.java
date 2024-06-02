@@ -12,8 +12,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "paciente")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class paciente {
-    @Id @Column(name = "pk_cedula")private Integer pk_cedula;
+public class Paciente {
+    @Id @Column(name = "pk_cedula")private Long pk_cedula;
     @Column(name = "tipo_de_cedula")private String tipo_de_cedula;
     @Column(name = "lugar_de_expedicion")private String lugar_de_expedicion;
     @Column(name = "nombre")private String nombre;
@@ -31,8 +31,8 @@ public class paciente {
     @Column(name = "usuario")private String usuario;
     @Column(name = "contrasena")private String contrasena;
 
-    public paciente(){}
-    public paciente(Integer pk_cedula, String tipo_de_cedula, String lugar_de_expedicion, String nombre, String primer_apellido, String segundo_apellido, Date fecha_de_nacimiento, String tipo_de_sangre, String telefono, String correo, String direccion, String alergias, String nombre_ce, String apellido_ce, String telefono_ce, String usuario, String contrasena)
+    public Paciente(){}
+    public Paciente(Long pk_cedula, String tipo_de_cedula, String lugar_de_expedicion, String nombre, String primer_apellido, String segundo_apellido, Date fecha_de_nacimiento, String tipo_de_sangre, String telefono, String correo, String direccion, String alergias, String nombre_ce, String apellido_ce, String telefono_ce, String usuario, String contrasena)
     {
         this.pk_cedula = pk_cedula;
         this.tipo_de_cedula = tipo_de_cedula;
@@ -56,7 +56,7 @@ public class paciente {
     //Gettes
     public String getUsuario() { return this.usuario; }
     public String getContrasena() { return this.contrasena; }
-    public Integer getPk_cedula() { return this.pk_cedula; }
+    public Long getPk_cedula() { return this.pk_cedula; }
     public String getTipo_de_cedula() { return this.tipo_de_cedula; }
     public String getLugarExpedicion() { return this.lugar_de_expedicion; }
     public String getNombre() { return this.nombre; }
@@ -72,7 +72,7 @@ public class paciente {
     public String getApellido_ce() { return this.apellido_ce; }
     public String getTelefono_ce() { return this.telefono_ce; }
     // Setters
-    public void setPk_cedula(Integer pk_cedula) { this.pk_cedula = pk_cedula; }
+    public void setPk_cedula(Long pk_cedula) { this.pk_cedula = pk_cedula; }
     public void setLugar_de_expedicion(String lugar_de_expedicion) { this.lugar_de_expedicion = lugar_de_expedicion; }
     public void setTipo_de_cedula(String tipo_de_cedula) { this.tipo_de_cedula = tipo_de_cedula; }
     public void setNombre(String nombre) { this.nombre = nombre; }
