@@ -53,5 +53,17 @@ public class ControladorMedico {
         return medicos; 
     }
     
+    @PostMapping("/guardar")
+    public boolean Guardar(@RequestBody Medico medico) {
+        boolean datosCompletos = (medico != null);
+        if (datosCompletos) {
+            repositorio_medico.save(medico);
+            return true;
+        } else {
+            System.out.println("Datos incompletos.");
+            return false;
+        }
+    }
+    
     
 }

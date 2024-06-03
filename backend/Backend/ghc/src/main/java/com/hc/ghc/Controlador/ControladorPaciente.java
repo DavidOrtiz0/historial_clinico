@@ -66,7 +66,7 @@ public class ControladorPaciente {
     
     @PostMapping("/obtener")
     public Paciente obtenerPaciente(@RequestBody Map<String, Integer> param) {
-        Integer cedula = (Integer) param.get("pk_cedula");
+        Long cedula = (long) param.get("pk_cedula");
         Paciente Paciente = repositoriopaciente.getReferenceById(cedula);
         if (Paciente != null) {
             return Paciente;
@@ -77,7 +77,7 @@ public class ControladorPaciente {
     
     @PostMapping("/consultar")
     public boolean verificarPaciente(@RequestBody Map<String, Integer> param) {
-        Integer cedula = (Integer) param.get("pk_cedula");
+        Long cedula = (long) param.get("pk_cedula");
         Paciente Paciente = repositoriopaciente.getReferenceById(cedula);
         if (Paciente != null) {
             return true;
