@@ -20,7 +20,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+/*
+let colombiaData;
+fetch('./colombia.json')
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    colombiaData = data;
+    console.log(data);
+  })
+  .catch(err => {
+    // Maneja errores aquí
+    console.error('Error:', err);
+  });
 
+// Rellenar el desplegable de departamentos
+const departamentoSelect = document.getElementById('departamento');
+const municipioSelect = document.getElementById('municipio');
+
+// Añadir departamentos al desplegable de departamentos
+Object.keys(colombiaData).forEach(department => {
+    const option = document.createElement('option');
+    option.value = department;
+    option.textContent = department;
+    departamentoSelect.appendChild(option);
+});
+
+// Receptor de eventos para el cambio del desplegable de departamento
+departamentoSelect.addEventListener('change', function() {
+    const selectedDepartment = this.value;
+    municipioSelect.innerHTML = '<option value="">Seleccione...</option>'; // Restablecer el menú desplegable del municipio
+
+    if (selectedDepartment) {
+        // Rellenar el menú desplegable de municipios en función del departamento seleccionado
+        colombiaData[selectedDepartment].forEach(municipality => {
+            const option = document.createElement('option');
+            option.value = municipality;
+            option.textContent = municipality;
+            municipioSelect.appendChild(option);
+        });
+    }
+});
+*/
 class Paciente
 {
     constructor(pk_cedula, tipo_de_cedula, lugar_de_expedicion, nombre, primer_apellido, segundo_apellido, fecha_de_nacimiento, tipo_de_sangre, telefono, correo, direccion, alergias, nombre_ce, apellido_ce, telefono_ce, usuario, contrasena)
@@ -57,19 +99,6 @@ class Medico
     }
 }
 
-class Cita
-{
-    constructor(pk_id_cita, fk_paciente, fk_medico, fk_programadorCitas, fecha, hora, tipo_de_cita)
-    {
-        this.pk_id_cita = pk_id_cita;
-        this.fk_paciente = fk_paciente;
-        this.fk_medico = fk_medico;
-        this.fk_programadorCitas = fk_programadorCitas;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.tipo_de_cita = tipo_de_cita;
-    }
-}
 let sesion;
 //Funciones para manejar el inicio de sección
 async function login()
@@ -369,7 +398,7 @@ function closeIngresarDocumentoSection() {
     document.getElementById('ingresarDocumentoSection').style.display = 'none';
     document.getElementById('numeroDocumentoForm').reset();
 }
-let Paciente_cedula = null;
+let Paciente_cedula;
 function verificarDocumento() {
     const numeroDocumentoInput = parseInt(document.getElementById('numeroDocumentoInput').value);
     const datos = {pk_cedula:numeroDocumentoInput}
@@ -433,18 +462,14 @@ async function submitProgramarCitaForm() {
             const [fecha, hora] = fecha_hora.split('T');
             //data = {};
             //for(let [key, value] of Medico_datos.entries()){ if(key === "especializacion" && value === "general") { console.log(data[key] = value); } }
-            const fk_medico = 1;
-            const fk_paciente = Paciente_cedula;
-            const fk_programadorCitas = 1;
-            const cita = new Cita
-            (
-                fk_paciente,
-                fk_medico,
-                fk_programadorCitas,
-                fecha,
-                hora,
-                tipo_de_cita
-            );
+            const cita = {
+                fk_paciente: {pk_id_paciente: 123},
+                fk_medico: {pk_id_medico: 1},
+                fk_programadorCitas: { pk_id_programadorCitas: 1},
+                fecha: fecha,
+                hora: hora,
+                tipo_de_cita: tipo_de_cita
+            }
 
             peticion(url, cita).then(
                 function(resultado)
