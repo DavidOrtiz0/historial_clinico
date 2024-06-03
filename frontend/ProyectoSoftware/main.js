@@ -89,13 +89,14 @@ class Paciente
 
 class Medico
 {
-    constructor(pk_id_medico, nombre, usuario, contrasena, especializacion)
+    constructor(pk_id_medico, especializacion,nombre, usuario, contrasena )
     {
         this.pk_id_medico = pk_id_medico;
+        this.especializacion = especializacion;
         this.nombre = nombre;
         this.usuario = usuario;
         this.contrasena = contrasena;
-        this.especializacion = especializacion;
+        
     }
 }
 
@@ -280,7 +281,7 @@ function cancelCrearHCForm() {
     closeCrearHCModal();
 }
 
-// Función para abrir el modal de crear usuario
+// Función para abrir el modal de crear medico
 function openCrearUsuarioModal() {
     document.getElementById('CrearUsuarioModal').style.display = 'block';
 }
@@ -293,8 +294,31 @@ function closeCrearUsuarioModal() {
 function submitCrearUsuarioForm() {
     const form = document.getElementById('CrearUsuarioForm');
     if (form.checkValidity()) {
-        alert('Usuario creado');
-        closeCrearUsuarioModal();
+        const nombre = document.getElementById("nombreMedico").value;
+        const especializacion = document.getElementById("especialidadMedico").value;
+        const usuario = document.getElementById("usuarioMedico").value;
+        const contrasena = document.getElementById("contrasenaMedico").value;
+        url='http://localhost:8080/medico/guardar';
+
+        const medico = new Medico (
+            2,
+            nombre,
+            especializacion,
+            usuario,
+            contrasena
+        );
+        console.log(nombre, especializacion, usuario, contrasena);
+
+        peticion(url, medico)
+        .then(function(response){
+            if(response != false){
+                alert('medico creado');
+                closeCrearUsuarioModal()
+            }else {alert("Hubo un error inesperado")}
+        }).catch(function(error){
+            console.error("el error es: ", error);
+        });
+    
     } else {
         alert('Por favor, complete todos los campos obligatorios');
     }
@@ -314,26 +338,6 @@ function logout() {
     document.getElementById('message').textContent = '';
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
-}
-
-//Para menejar el modal de Atender Urgencias
-function openAtenderUrgenciasModal() {
-    document.getElementById('atenderUrgenciasModal').style.display = 'block';
-}
-
-function closeAtenderUrgenciasModal() {
-    document.getElementById('atenderUrgenciasModal').style.display = 'none';
-    document.getElementById('atenderUrgenciasForm').reset();
-}
-
-function submitAtenderUrgenciasForm() {
-    const form = document.getElementById('atenderUrgenciasForm');
-    if (form.checkValidity()) {
-        alert('Urgencia atendida');
-        closeAtenderUrgenciasModal();
-    } else {
-        alert('Por favor, complete todos los campos obligatorios');
-    }
 }
 
 // Funciones para manejar la consulta de HC
