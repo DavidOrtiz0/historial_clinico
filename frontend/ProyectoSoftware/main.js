@@ -206,43 +206,27 @@ async function submitCrearHCForm() {
             data[key] = value;
         }
         console.log(data);
-        const nombre = document.getElementById("nombre").value;
-        const primer_apellido = document.getElementById("primerApellido").value;
-        const segundo_apellido = document.getElementById("segundoApellido").value;
-        const tipo_de_documento = document.getElementById("tipoDocumento").value;
-        const lugar_de_expedicion = document.getElementById("lugarExpedicion").value;
-        const pk_cedula = parseInt(document.getElementById("numeroDocumento").value);
-        const tipo_de_sangre = document.getElementById("tipoSangre").value;
-        const fecha_de_nacimiento = document.getElementById("fechaNacimiento").value;
-        const telefono = document.getElementById("numeroCelular").value;
-        const correo = document.getElementById("correo").value;
-        const direccion = document.getElementById("direccion").value;
-        const alergias = "ninguna";
-        const nombre_ce = document.getElementById("nombreEmergencia").value;
-        const apelliido_ce = document.getElementById("apellidoEmergencia").value;
-        const telefono_ce = document.getElementById("numeroCelularEmergencia").value;
-        const usuario = "paciente";
-        const contrasena = "777";
-        const pacient = new Paciente
-        (
-            pk_cedula,
-            tipo_de_documento,
-            lugar_de_expedicion,
-            nombre,
-            primer_apellido,
-            segundo_apellido,
-            fecha_de_nacimiento,
-            tipo_de_sangre,
-            telefono,
-            correo,
-            direccion,
-            alergias,
-            nombre_ce,
-            apelliido_ce,
-            telefono_ce,
-            usuario,
-            contrasena
-        );
+
+        const pacient = new Paciente(
+            parseInt(document.getElementById("numeroDocumento").value),
+            document.getElementById("tipoDocumento").value,
+            document.getElementById("lugarExpedicion").value,
+            document.getElementById("nombre").value,
+            document.getElementById("primerApellido").value,
+            document.getElementById("segundoApellido").value,
+            document.getElementById("fechaNacimiento").value,
+            document.getElementById("tipoSangre").value,
+            document.getElementById("numeroCelular").value,
+            document.getElementById("correo").value,
+            document.getElementById("direccion").value,
+            "ninguna",
+            document.getElementById("nombreEmergencia").value,
+            document.getElementById("apellidoEmergencia").value,
+            document.getElementById("numeroCelularEmergencia").value,
+            "paciente2",
+            "767"
+          ); 
+           
 
         url = 'http://localhost:8080/paciente/guardar';
 
