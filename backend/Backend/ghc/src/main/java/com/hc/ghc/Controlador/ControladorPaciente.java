@@ -1,9 +1,11 @@
 package com.hc.ghc.Controlador;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,19 +28,27 @@ public class ControladorPaciente {
     @Autowired RepositorioPaciente repositoriopaciente;
 
     @PostMapping("/sesion")
-    public boolean iniciarSesion(@RequestBody Map<String, Object> sesion) {
+    public ResponseEntity<Map<String, Object>> iniciarSesion(@RequestBody Map<String, Object> sesion) {
         String usuario = (String) sesion.get("usuario");
         String contrasena = (String) sesion.get("contrasena");
         boolean respuesta = false;
-
+        Paciente pacienteEncontrado = null;
         List<Paciente> pacientes = repositoriopaciente.findAll();
-        for(Paciente pacient: pacientes){
-            if (pacient.getUsuario().equals(usuario)  && pacient.getContrasena().equals(contrasena) ){
+
+        for(Paciente paciente: pacientes)
+        {
+            if (paciente.getUsuario().equals(usuario)  && paciente.getContrasena().equals(contrasena) )
                 respuesta = true;
-            }
+                pacienteEncontrado = paciente;
+                pacienteEncontrado.setUsuario(null);
+                pacienteEncontrado.setContrasena(null);
+            
         }
 
-        return respuesta;
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("confirmacion", respuesta);
+        resultado.put("actor", pacienteEncontrado);
+        return ResponseEntity.ok(resultado);
     }
 
     @PostMapping("/guardar")

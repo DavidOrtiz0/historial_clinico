@@ -146,11 +146,12 @@ async function peticion_get(url)
 
 async function view(urls, clave, datos_sesion)
 {
-    let iterar = Object.values(urls);
-    let respuesta = await peticion(iterar[clave], datos_sesion);
-    let condicion = `${respuesta}-${clave}`;
+    const messageElement = document.getElementById('message');
+    const iterar = Object.values(urls);
+    const respuesta = await peticion(iterar[clave], datos_sesion);
+    const condicion = `${respuesta.confirmacion}-${clave}`;
 
-    console.info("el valor de iteracion es: ", iterar, " la clave es: ", clave, " la respuesta es: ", respuesta)
+    //console.info("el valor de iteracion es: ", iterar, " la clave es: ", clave, " la respuesta es: ", respuesta)
     
         switch(condicion)
         {
@@ -170,7 +171,6 @@ async function view(urls, clave, datos_sesion)
                 break;
             
             case 'true-3':
-                console.log("es un paciente");
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('paciente-options').style.display = 'flex';
                 break;
@@ -178,7 +178,6 @@ async function view(urls, clave, datos_sesion)
             default:
                 if(condicion === 'false-3')
                 {
-                    const messageElement = document.getElementById('message');
                     document.getElementById('username').value = '';
                     document.getElementById('password').value = '';
                     messageElement.style.color = 'red';
@@ -200,6 +199,13 @@ function closeCrearHCModal() {
 async function submitCrearHCForm() {
     const form = document.getElementById('crearHCForm');
     if (form.checkValidity()) {
+
+        const Formulario = new FormData(form);
+        data = {};
+        for(let [key, value] of Formulario.entries()){
+            data[key] = value;
+        }
+        console.log(data);
         const nombre = document.getElementById("nombre").value;
         const primer_apellido = document.getElementById("primerApellido").value;
         const segundo_apellido = document.getElementById("segundoApellido").value;
@@ -217,7 +223,6 @@ async function submitCrearHCForm() {
         const telefono_ce = document.getElementById("numeroCelularEmergencia").value;
         const usuario = "paciente";
         const contrasena = "777";
-
         const pacient = new Paciente
         (
             pk_cedula,

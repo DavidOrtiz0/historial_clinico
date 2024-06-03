@@ -87,5 +87,7 @@ public class Paciente {
     public void setNombre_ce(String nombre_ce) { this.nombre_ce = nombre_ce; }
     public void setApellido_ce(String apellido_ce) { this.apellido_ce = apellido_ce; }
     public void setTelefono_ce(String telefono_ce) { this.telefono_ce = telefono_ce; }
+    public void setUsuario(String usuario) { this.usuario = usuario; }
+    public void setContrasena(String contrsena) { this.contrasena = contrsena;}
     
 }
