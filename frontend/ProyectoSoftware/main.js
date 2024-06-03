@@ -70,7 +70,7 @@ class Cita
         this.tipo_de_cita = tipo_de_cita;
     }
 }
-
+let sesion;
 //Funciones para manejar el inicio de sección
 async function login()
 {
@@ -156,21 +156,25 @@ async function view(urls, clave, datos_sesion)
         switch(condicion)
         {
             case 'true-0':
+                sesion = "medico";
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('medico-options').style.display = 'block';
                 break;
             
             case 'true-1':
+                sesion = "administrador";
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-options').style.display = 'flex';
                 break;
 
             case 'true-2':
+                sesion = "programadordecitas";
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('programador-options').style.display = 'block';
                 break;
             
             case 'true-3':
+                sesion = "paciente";
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('paciente-options').style.display = 'flex';
                 break;
@@ -317,34 +321,31 @@ function closeConsultarHCModal() {
 async function buscarHC() {
     const cedula = parseInt(document.getElementById('cedulaConsultar').value);
     url='http://localhost:8080/paciente/obtener';
+    urlc='http://localhost:8080/cita/obtener';
     const datos = {pk_cedula:cedula}
 
     peticion(url, datos).then(
             function(resultado)
             {
-                document.getElementById('hcActions').style.display = 'block';
-                //console.log(resultado);
-            }
-        ).catch(function(error)
+                peticion(urlc, datos)
+                .then(
+                    function(resultado)
+                    {
+                        console.log(resultado);
+                        document.getElementById('hcActions').style.display = 'block';
+                    })
+                .catch(function(error){
+                        console.error("EL error es: ",error);
+                        alert('No existe citas registradas para este paciente');
+                        closeConsultarHCModal();
+                    });
+            })
+        .catch(function(error)
             {
                 alert('No existe ningún historial clínico asociado');
                 closeConsultarHCModal();
                 console.error(error);
             });
-    
-    urlc='http://localhost:8080/cita/obtener';
-
-    peticion(urlc, datos)
-    .then(
-        function(resultado)
-        {
-            console.log(resultado);
-        })
-    .catch(function(error){
-            console.error("EL error es: ",error);
-            alert('F en el chat');
-            closeConsultarHCModal();
-        });
 }
 
 function modificarHC() {
@@ -369,37 +370,23 @@ function closeIngresarDocumentoSection() {
     document.getElementById('numeroDocumentoForm').reset();
 }
 let Paciente_cedula = null;
-let Medico_datos = null;
 function verificarDocumento() {
     const numeroDocumentoInput = parseInt(document.getElementById('numeroDocumentoInput').value);
     const datos = {pk_cedula:numeroDocumentoInput}
-
     const url='http://localhost:8080/paciente/consultar';
-    const urlm= 'http://localhost:8080/medico/obtener'
 
-    const numeroDocumentoExistente = peticion(url, datos).then(
+    peticion(url, datos).then(
         function(resultado)
         {
             console.log(resultado);
-            Paciente_cedula = resultado;
+            Paciente_cedula = numeroDocumentoInput;
         }
     ).catch(function(error)
         {
-            alert('Nooooooooooooooooooooooooooooo');
+            alert('Ocurrio una falla inesperada');
             closeIngresarDocumentoSection();
             console.error(error);
         });
-
-        peticion_get(urlm).then(
-            function(resultado)
-            {
-                console.log(resultado);
-                Medico_datos = resultado;
-            }
-        ).catch(function(error)
-            {
-                console.error(error);
-            });
 
     if (numeroDocumentoInput !== false) {
         document.getElementById('paciente').value = "Datos del paciente"; // Aquí irían los datos reales
@@ -415,7 +402,18 @@ function cancelIngresarDocumentoSection() {
 }
 
 // Funciones para manejar el modal de programar cita
-function openProgramarCitaModal() {
+async function openProgramarCitaModal() {
+    const urlm= 'http://localhost:8080/medico/obtener';
+    peticion_get(urlm).then(
+        function(resultado)
+        {
+            console.log(resultado)
+        }
+    ).catch(function(error)
+        {
+            console.error("Hubo un error al traer medicos: ",error);
+        });
+
     document.getElementById('programarCitaModal').style.display = 'block';
 }
 
@@ -426,23 +424,20 @@ function closeProgramarCitaModal() {
 
 async function submitProgramarCitaForm() {
     const form = document.getElementById('programarCitaForm');
+    const url = 'http://localhost:8080/cita/guardar';
+
     if (form.checkValidity()) {
         const tipo_de_cita = document.getElementById("tipoConsulta").value;
-
         const fecha_hora = document.getElementById("fechaHora").value;
         if (typeof fecha_hora === 'string' && fecha_hora.includes('T')) {
             const [fecha, hora] = fecha_hora.split('T');
-            console.log('Fecha:', fecha);
-            console.log('Hora:', hora);
-            // Usa `fecha` y `hora` como necesites
-
+            //data = {};
+            //for(let [key, value] of Medico_datos.entries()){ if(key === "especializacion" && value === "general") { console.log(data[key] = value); } }
             const fk_medico = 1;
-            const fk_paciente = BigInt(Paciente_cedula);
-            const pk_id_cita = 1;
+            const fk_paciente = Paciente_cedula;
             const fk_programadorCitas = 1;
             const cita = new Cita
             (
-                pk_id_cita,
                 fk_paciente,
                 fk_medico,
                 fk_programadorCitas,
@@ -454,15 +449,15 @@ async function submitProgramarCitaForm() {
             peticion(url, cita).then(
                 function(resultado)
                 {
-                    console.log(resultado);
-                }
-            ).catch(function(error)
+                    if(resultado === true){
+                        alert('Cita programada');
+                        closeProgramarCitaModal();
+                    }else{ alert("hay un error inesperado");}
+                })
+            .catch(function(error)
                 {
-                    console.error(error);
+                    console.error("EL error es: ",error);
                 });
-
-            alert('Cita programada');
-            closeProgramarCitaModal();
         } else {
             console.error('Fecha y hora no válidas:', fecha_hora);
             alert('Por favor, seleccione una fecha y hora válidas.');
@@ -483,7 +478,7 @@ window.onclick = function(event) {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
         if (event.target == modal) {
-            modal.style.display = 'none';
+            modal.  style.display = 'none';
         }
     });
 }

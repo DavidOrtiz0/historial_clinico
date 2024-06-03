@@ -7,6 +7,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -17,7 +18,7 @@ import jakarta.persistence.Table;
 @Table(name="cita")
 public class Cita {
     
-    @Id @Column(name="pk_id_cita") private Long pk_id_cita;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name="pk_id_cita") private Long pk_id_cita;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY) @JoinColumn(name="fk_paciente") private Paciente fk_paciente;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY) @JoinColumn(name="fk_programadorCitas") private Programadordecitas fk_programadorCitas;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY) @JoinColumn(name="fk_medico") private Medico fk_medico;
@@ -27,9 +28,8 @@ public class Cita {
 
     public Cita(){ }
 
-    public Cita(Long pk_id_cita, Paciente fk_paciente, Programadordecitas programadorCitas, Medico fk_medico, LocalDate fecha, LocalTime hora, String tipo_de_cita)
+    public Cita(Paciente fk_paciente, Programadordecitas programadorCitas, Medico fk_medico, LocalDate fecha, LocalTime hora, String tipo_de_cita)
     {
-        this.pk_id_cita = pk_id_cita;
         this.fk_paciente = fk_paciente;
         this.fk_programadorCitas = programadorCitas;
         this.fk_medico = fk_medico;
