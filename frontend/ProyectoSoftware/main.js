@@ -64,6 +64,43 @@ function login() {
     }
 }
 
+//para cita con medico como tal
+const medicamentos = [
+    'Paracetamol', 'Ibuprofeno', 'Amoxicilina', 'Ciprofloxacino', 'Omeprazol',
+    'Metformina', 'Atenolol', 'Losartan', 'Simvastatina', 'Levotiroxina',
+    'Prednisona', 'Furosemida', 'Alprazolam', 'Tramadol', 'Gabapentina',
+    'Cetirizina', 'Loratadina', 'Azitromicina', 'Clonazepam', 'Metronidazol',
+    'Benzonatato', 'Escitalopram', 'Fluoxetina', 'Sertralina', 'Venlafaxina',
+    'Duloxetina', 'Bupropion', 'Lamotrigina', 'Quetiapina', 'Aripiprazol'
+];
+
+// Cargar los medicamentos en el menú desplegable
+const medicamentosSelect = document.getElementById('medicamentos');
+medicamentos.forEach(medicamento => {
+    const option = document.createElement('option');
+    option.value = medicamento;
+    option.textContent = medicamento;
+    medicamentosSelect.appendChild(option);
+});
+
+// Abrir el modal
+function openModal() {
+    document.getElementById('myModal').style.display = "block";
+}
+
+// Cerrar el modal
+function closeModal() {
+    document.getElementById('myModal').style.display = "none";
+}
+
+// Guardar información de la cita
+function guardarInformacion(event) {
+    event.preventDefault();
+    // Aquí puedes añadir la lógica para guardar la información en la base de datos
+    alert('Información de cita guardada y actualizada');
+    closeModal();
+}
+
 // Constante para los departamentos y sus municipios del archivo colombia.json
 const colombiaData = {
     "Amazonas": ["Leticia", "Puerto Nariño"],
@@ -206,26 +243,6 @@ function logout() {
     document.getElementById('message').textContent = '';
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
-}
-
-//Para menejar el modal de Atender Urgencias
-function openAtenderUrgenciasModal() {
-    document.getElementById('atenderUrgenciasModal').style.display = 'block';
-}
-
-function closeAtenderUrgenciasModal() {
-    document.getElementById('atenderUrgenciasModal').style.display = 'none';
-    document.getElementById('atenderUrgenciasForm').reset();
-}
-
-function submitAtenderUrgenciasForm() {
-    const form = document.getElementById('atenderUrgenciasForm');
-    if (form.checkValidity()) {
-        alert('Urgencia atendida');
-        closeAtenderUrgenciasModal();
-    } else {
-        alert('Por favor, complete todos los campos obligatorios');
-    }
 }
 
 // Funciones para manejar la consulta de HC

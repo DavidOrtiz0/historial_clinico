@@ -45,10 +45,9 @@
         <div id="medico-options" style="display: none;">
             <h2>Bienvenido, Medico</h2>
             <div id="pacientes">
-                <p>Nombre del Paciente <button onclick="verHC()">Ver Historial Clínico</button></p>
+                <p><a href="#" onclick="openModal()">Nombre del Paciente</a> <button onclick="verHC()">Ver Historial Clínico</button></p>
             </div>
             <button onclick="openConsultarHCModal()">Consultar HC</button>
-            <button onclick="openAtenderUrgenciasModal()">Atender Urgencias</button>
             <button onclick="logout()">Cerrar Sesión</button>
         </div>
         <div id="programador-options" style="display: none;">
@@ -64,12 +63,12 @@
     </section>
 </main>
 
- <!-- Modal for Crear HC -->
+ <!-- Modal for Crear Paciente -->
 <div id="crearHCModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeCrearHCModal()">&times;</span>
         <h2>Crear Historia Clínica</h2>
-        <form id="crearHCForm" method="POST" action="tu-endpoint">
+        <form id="crearHCForm">
             <h3>Datos Personales</h3>
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
@@ -156,7 +155,7 @@
                 <input type="tel" id="numeroCelularEmergencia" name="numeroCelularEmergencia" required>
             </div>
             <div class="modal-buttons">
-                <button type="submit" onclick="submitCrearHCForm()">Aceptar</button>
+                <button type="button" onclick="submitCrearHCForm()">Aceptar</button>
                 <button type="button" onclick="cancelCrearHCForm()">Cancelar</button>
             </div>
         </form>
@@ -168,23 +167,23 @@
     <div class="modal-content">
         <span class="close" onclick="closeAssignUserModal()">&times;</span>
         <h2>Asignar Usuario y Contraseña</h2>
-        <form id="assignUserForm" method="POST" action="tu-endpoint">
+        <form id="assignUserForm">
             <div class="form-group">
                 <label for="usuario">Usuario:</label>
-                <input type="text" id="usuario" name="usuario" required>
+                <input type="text" id="usuarioAsignar" name="usuario" required>
             </div>
             <div class="form-group">
                 <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" required>
+                <input type="password" id="contrasenaAsignar" name="contrasena" required>
             </div>
             <div class="modal-buttons">
-                <button type="submit" onclick="submitAssignUserForm()">Aceptar</button>
+                <button type="button" onclick="submitAssignUserForm()">Aceptar</button>
             </div>
         </form>
     </div>
 </div>
 
-<!-- Modal Crear Usuario -->
+<!-- Modal Crear Medico -->
 <div id="CrearUsuarioModal" class="Modal">
     <div class="modal-content">
       <span class="close" onclick="closeCrearUsuarioModal()">&times;</span>
@@ -197,69 +196,52 @@
           <input type="text" id="numeroDocumento" required>
           <h3>Asignar Usuario y Contraseña</h3>
           <label for="usuario">Asignar Usuario</label>
-          <input type="text" id="usuario" required>
+          <input type="text" id="usuarioMedico" required>
           <label for="password">Asignar Contraseña</label>
-          <input type="password" id="password" required>
+          <input type="password" id="passwordMedico" required>
           <button type="button" onclick="submitCrearUsuarioForm()">Aceptar</button>
           <button type="button" onclick="cancelCrearUsuarioForm()">Cancelar</button>
       </form>
     </div>
   </div>
 
- <!-- Modal para atender urgencias -->
-<div id="atenderUrgenciasModal" class="modal">
+  <!-- Modal para cita con el medico como tal -->
+<div id="myModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeAtenderUrgenciasModal()">&times;</span>
-        <h2>Atender Urgencias</h2>
-        <form id="atenderUrgenciasForm">
-            <h3>Datos Personales</h3>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" required>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" required>
-            <label for="cedula">Cédula:</label>
-            <input type="text" id="cedula" required>
-            <label for="tipoSangre">Tipo de Sangre:</label>
-            <select id="tipoSangre" required>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-            </select>
-            <h3>Datos de Contacto</h3>
-            <label for="celular">Celular:</label>
-            <input type="text" id="celular" required>
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" required>
-            <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" required>
-            <h3>Datos de Contacto de Emergencia</h3>
-            <label for="nombreEmergencia">Nombre:</label>
-            <input type="text" id="nombreEmergencia" required>
-            <label for="apellidoEmergencia">Apellido:</label>
-            <input type="text" id="apellidoEmergencia" required>
-            <label for="numeroEmergencia">Número:</label>
-            <input type="text" id="numeroEmergencia" required>
-            <h3>Tipo de Urgencia</h3>
-            <label for="tipoUrgencia">Tipo:</label>
-            <select id="tipoUrgencia" required>
-                <option value="Clase A">Clase A</option>
-                <option value="Clase B">Clase B</option>
-                <option value="Clase C">Clase C</option>
-            </select>
-            <label for="descripcionUrgencia">Descripción:</label>
-            <textarea id="descripcionUrgencia" required></textarea>
-            <label for="condicionUrgencia">Condición:</label>
-            <textarea id="condicionUrgencia" required></textarea>
-            <button type="button" onclick="submitAtenderUrgenciasForm()">Enviar</button>
-            <button type="button" class="cancel" onclick="closeAtenderUrgenciasModal()">Cancelar</button>
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Información de la Cita</h2>
+        <form id="citaForm" onsubmit="guardarInformacion(event)">
+            <div class="form-group">
+                <label for="asistenciaCheckbox">Asistencia:</label>
+                <input type="checkbox" id="asistenciaCheckbox">
+            </div>
+            <div class="form-group">
+                <label for="reporte">Reporte del Médico:</label>
+                <textarea id="reporte" name="reporte" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="examenes">Exámenes:</label>
+                <textarea id="examenes" name="examenes" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="medicamentos">Medicamentos:</label>
+                <select id="medicamentos">
+                    <option value="">Seleccione un medicamento</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dosis">Dosis:</label>
+                <input type="text" id="dosis" name="dosis">
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="text" id="cantidad" name="cantidad">
+            </div>
+            <button type="button">Guardar</button>
         </form>
     </div>
 </div>
+
 
  <!-- Modal for Consultar HC -->
  <div id="consultarHCModal" class="modal">
