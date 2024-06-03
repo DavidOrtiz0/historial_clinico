@@ -31,7 +31,7 @@ public class Paciente {
     @Column(name = "usuario")private String usuario;
     @Column(name = "contrasena")private String contrasena;
 
-    public Paciente(){}
+    public Paciente(){ }
     public Paciente(Long pk_cedula, String tipo_de_cedula, String lugar_de_expedicion, String nombre, String primer_apellido, String segundo_apellido, Date fecha_de_nacimiento, String tipo_de_sangre, String telefono, String correo, String direccion, String alergias, String nombre_ce, String apellido_ce, String telefono_ce, String usuario, String contrasena)
     {
         this.pk_cedula = pk_cedula;
