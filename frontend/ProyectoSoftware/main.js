@@ -128,7 +128,7 @@ class Medico
     }
 }
 
-let sesion;
+
 //Funciones para manejar el inicio de sección
 async function login()
 {
@@ -201,7 +201,7 @@ async function peticion_get(url)
         console.error("Error al realizar la accion: ", error);
     }
 }
-
+let sesion;
 async function view(urls, clave, datos_sesion)
 {
     const messageElement = document.getElementById('message');
@@ -214,25 +214,25 @@ async function view(urls, clave, datos_sesion)
         switch(condicion)
         {
             case 'true-0':
-                sesion = "medico";
+                sesion = respuesta.actor;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('medico-options').style.display = 'block';
                 break;
             
             case 'true-1':
-                sesion = "administrador";
+                sesion = respuesta.actor;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-options').style.display = 'flex';
                 break;
 
             case 'true-2':
-                sesion = "programadordecitas";
+                sesion = respuesta.actor;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('programador-options').style.display = 'block';
                 break;
             
             case 'true-3':
-                sesion = "paciente";
+                sesion = respuesta.actor;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('paciente-options').style.display = 'flex';
                 break;
@@ -471,6 +471,13 @@ function verificarDocumento() {
         {
             console.log(resultado);
             Paciente_cedula = numeroDocumentoInput;
+            if (resultado) {
+                document.getElementById('paciente').value = "Datos del paciente"; // Aquí irían los datos reales
+                closeIngresarDocumentoSection();
+                openProgramarCitaModal();
+            } else {
+                alert('🤒este numero de documento no se encuentra en el sistema. Recuerde que ya debe estar registrado por el administrador, si este registrado ya por el administrador, inténtalo de nuevo, si el fallo persiste por favor comunícate con el Administrador: XXXXXXXX');
+            }
         }
     ).catch(function(error)
         {
@@ -478,14 +485,6 @@ function verificarDocumento() {
             closeIngresarDocumentoSection();
             console.error(error);
         });
-
-    if (numeroDocumentoInput !== false) {
-        document.getElementById('paciente').value = "Datos del paciente"; // Aquí irían los datos reales
-        closeIngresarDocumentoSection();
-        openProgramarCitaModal();
-    } else {
-        alert('🤒este numero de documento no se encuentra en el sistema. Recuerde que ya debe estar registrado por el administrador, si este registrado ya por el administrador, inténtalo de nuevo, si el fallo persiste por favor comunícate con el Administrador: XXXXXXXX');
-    }
 }
 
 function cancelIngresarDocumentoSection() {
@@ -493,19 +492,20 @@ function cancelIngresarDocumentoSection() {
 }
 
 // Funciones para manejar el modal de programar cita
+let medicos;
 async function openProgramarCitaModal() {
     const urlm= 'http://localhost:8080/medico/obtener';
     peticion_get(urlm).then(
         function(resultado)
         {
-            console.log(resultado)
+            medicos = resultado;
+            console.log(medicos);
+            document.getElementById('programarCitaModal').style.display = 'block';
         }
     ).catch(function(error)
         {
             console.error("Hubo un error al traer medicos: ",error);
         });
-
-    document.getElementById('programarCitaModal').style.display = 'block';
 }
 
 function closeProgramarCitaModal() {
@@ -520,21 +520,23 @@ async function submitProgramarCitaForm() {
     if (form.checkValidity()) {
         const tipo_de_cita = document.getElementById("tipoConsulta").value;
         const fecha_hora = document.getElementById("fechaHora").value;
+
         if (typeof fecha_hora === 'string' && fecha_hora.includes('T')) {
             const [fecha, hora] = fecha_hora.split('T');
+            const medicoSelecionado = medicos[0];
             const cita = {
                 fk_paciente: {pk_id_paciente:Paciente_cedula},
-                fk_medico: {pk_id_medico: 1},
-                fk_programadorCitas: { pk_id_programadorCitas: 1},
+                fk_medico: {pk_id_medico: medicoSelecionado.pk_id_medico},
+                fk_programadorCitas: { pk_id_programadorCitas: sesion.pk_id_programadordecitas},
                 fecha: fecha,
                 hora: hora,
                 tipo_de_cita: tipo_de_cita
             }
-
+            console.log(cita)
             peticion(url, cita).then(
                 function(resultado)
                 {
-                    if(resultado === true){
+                    if(resultado){
                         alert('Cita programada');
                         closeProgramarCitaModal();
                     }else{ alert("hay un error inesperado");}
