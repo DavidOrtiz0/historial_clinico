@@ -1,7 +1,5 @@
 package com.hc.ghc.modelo;
 
-import org.hibernate.annotations.ValueGenerationType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

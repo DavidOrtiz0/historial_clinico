@@ -10,14 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hc.ghc.modelo.Cita;
 import com.hc.ghc.modelo.Medico;
 import com.hc.ghc.modelo.Paciente;
 import com.hc.ghc.modelo.Programadordecitas;
-import com.hc.ghc.repositorio.RepositorioAdministrador;
 import com.hc.ghc.repositorio.RepositorioCita;
 import com.hc.ghc.repositorio.RepositorioMedico;
 import com.hc.ghc.repositorio.RepositorioPaciente;
