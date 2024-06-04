@@ -256,10 +256,34 @@
             <div class="modal-buttons">
                 <button type="button" onclick="buscarHC()">Buscar</button>
             </div>
+            <!-- Sección para mostrar la tabla de citas programadas -->
+<!-- Sección para mostrar la tabla de citas programadas -->
+<h2>Citas Programadas</h2>
+<table id="tablaCitasProgramadas" border="1">
+    <thead>
+        <tr>
+            <th>Marcar</th>
+            <th>Tipo de Consulta</th>
+            <th>Fecha y Hora</th>
+            <th>Paciente</th>
+            <th>Médico</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Ejemplo de una fila con checkbox -->
+        <tr>
+            <td><input type="checkbox"></td>
+            <td>Cita Programada</td>
+            <td>2024-06-05 10:00 AM</td>
+            <td>Paciente Ejemplo</td>
+            <td>Médico Ejemplo</td>
+        </tr>
+        <!-- Aquí se agregarán las citas programadas -->
+    </tbody>
+</table>
             <div id="hcActions" style="display: none;">
                 <h3>¿Qué desea hacer con la HC?</h3>
                 <button onclick="modificarHC()">Modificar</button>
-                <button onclick="verHC()">Consultar</button>
                 <button onclick="eliminarHC()">Eliminar</button>
             </div>
         </form>

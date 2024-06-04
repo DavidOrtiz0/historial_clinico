@@ -165,7 +165,7 @@ departamentoSelect.addEventListener('change', function() {
     }
 });
 
-// Funciones para manejar el modal de crear HC
+// Funciones para manejar el modal de crear paciente
 function openCrearHCModal() {
     document.getElementById('crearHCModal').style.display = 'block';
 }
@@ -246,6 +246,7 @@ function logout() {
 }
 
 // Funciones para manejar la consulta de HC
+/*const cedulaDefinida = '123456786';
 function openConsultarHCModal() {
     document.getElementById('consultarHCModal').style.display = 'block';
 }
@@ -263,7 +264,7 @@ function buscarHC() {
     } else {
         // Aquí iría la lógica para verificar si el HC existe en la base de datos
         // Como aún no está implementado, siempre diremos que no existe
-        const hcExists = false;
+        const hcExists = (cedula === cedulaDefinida);
 
         if (hcExists) {
             document.getElementById('hcActions').style.display = 'block';
@@ -284,7 +285,7 @@ function verHC() {
 
 function eliminarHC() {
     alert('Función de Eliminar HC no implementada aún.');
-}
+}*/
 
 // Funciones para manejar la sección de ingresar documento para programar cita
 function openIngresarDocumentoSection() {
@@ -314,7 +315,7 @@ function cancelIngresarDocumentoSection() {
 }
 
 // Funciones para manejar el modal de programar cita
-function openProgramarCitaModal() {
+/*function openProgramarCitaModal() {
     document.getElementById('programarCitaModal').style.display = 'block';
 }
 
@@ -345,4 +346,79 @@ window.onclick = function(event) {
             modal.style.display = 'none';
         }
     });
+}*/
+
+// Funciones para manejar el modal de programar cita
+// Función para agregar una nueva fila a la tabla de citas programadas con checkbox
+function agregarFilaCitaProgramada(tipoConsulta, fechaHora, paciente, medico) {
+    const table = document.getElementById('tablaCitasProgramadas').getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+    const checkboxCell = newRow.insertCell(0);
+    checkboxCell.innerHTML = '<input type="checkbox">';
+    newRow.insertCell(1).innerText = tipoConsulta;
+    newRow.insertCell(2).innerText = fechaHora;
+    newRow.insertCell(3).innerText = paciente;
+    newRow.insertCell(4).innerText = medico;
+}
+
+// Función para enviar el formulario y agregar una cita programada
+function submitProgramarCitaForm() {
+    const form = document.getElementById('programarCitaForm');
+    if (form.checkValidity()) {
+        const tipoConsulta = document.getElementById('tipoConsulta').value;
+        const fechaHora = document.getElementById('fechaHora').value;
+        const paciente = document.getElementById('paciente').value;
+        const medico = document.getElementById('medico').value;
+
+        // Agregar la nueva cita a la tabla
+        agregarFilaCitaProgramada(tipoConsulta, fechaHora, paciente, medico);
+
+        alert('Cita programada');
+        closeProgramarCitaModal();
+    } else {
+        alert('Por favor, complete todos los campos obligatorios');
+    }
+}
+
+// Función para abrir el modal de programar cita
+function openProgramarCitaModal() {
+    document.getElementById('programarCitaModal').style.display = 'block';
+}
+
+// Función para cerrar el modal de programar cita y restablecer el formulario
+function closeProgramarCitaModal() {
+    document.getElementById('programarCitaModal').style.display = 'none';
+    document.getElementById('programarCitaForm').reset();
+}
+
+// Función para cancelar el formulario de programar cita
+function cancelProgramarCitaForm() {
+    closeProgramarCitaModal();
+}
+
+// Funciones para manejar la consulta de HC
+const cedulaDefinida = '123456786';
+function openConsultarHCModal() {
+    document.getElementById('consultarHCModal').style.display = 'block';
+}
+
+function closeConsultarHCModal() {
+    document.getElementById('consultarHCModal').style.display = 'none';
+    document.getElementById('consultarHCForm').reset();
+    document.getElementById('hcActions').style.display = 'none';
+}
+
+function buscarHC() {
+    const cedula = document.getElementById('cedulaConsultar').value;
+    if (cedula === "") {
+        alert('Por favor, ingrese el número de cédula');
+    } else {
+        const hcExists = (cedula === cedulaDefinida);
+        if (hcExists) {
+            document.getElementById('hcActions').style.display = 'block';
+        } else {
+            alert('No existe ningún historial clínico asociado');
+            closeConsultarHCModal();
+        }
+    }
 }
