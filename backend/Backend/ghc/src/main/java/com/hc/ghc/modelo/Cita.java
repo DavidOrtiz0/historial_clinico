@@ -19,9 +19,9 @@ import jakarta.persistence.Table;
 public class Cita {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name="pk_id_cita") private Long pk_id_cita;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY) @JoinColumn(name="fk_paciente") private Paciente fk_paciente;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY) @JoinColumn(name="fk_programadorCitas") private Programadordecitas fk_programadorCitas;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY) @JoinColumn(name="fk_medico") private Medico fk_medico;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) @JoinColumn(name="fk_paciente") private Paciente fk_paciente;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) @JoinColumn(name="fk_programadorCitas") private Programadordecitas fk_programadorCitas;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) @JoinColumn(name="fk_medico") private Medico fk_medico;
     @Column(name="fecha") private LocalDate fecha;
     @Column(name="hora") private LocalTime hora;
     @Column(name="tipo_de_cita") private String tipo_de_cita;

@@ -32,12 +32,14 @@ CREATE TABLE paciente (
 
 -- Tabla Médico
 CREATE TABLE medico (
-    pk_id_medico BIGINT(10) PRIMARY KEY,
+    pk_id_medico BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(10),
+    especializacion VARCHAR(12),
     usuario VARCHAR(10),
-    contrasena VARCHAR(10),
-    especializacion VARCHAR(12)
+    contrasena VARCHAR(10)
+    
 );
+
 
 -- Tabla Administrador
 CREATE TABLE administrador (

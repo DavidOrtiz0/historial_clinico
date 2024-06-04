@@ -89,9 +89,8 @@ class Paciente
 
 class Medico
 {
-    constructor(pk_id_medico, especializacion,nombre, usuario, contrasena )
+    constructor(nombre,especializacion, usuario, contrasena )
     {
-        this.pk_id_medico = pk_id_medico;
         this.especializacion = especializacion;
         this.nombre = nombre;
         this.usuario = usuario;
@@ -301,7 +300,6 @@ function submitCrearUsuarioForm() {
         url='http://localhost:8080/medico/guardar';
 
         const medico = new Medico (
-            2,
             nombre,
             especializacion,
             usuario,
@@ -351,6 +349,7 @@ function closeConsultarHCModal() {
     document.getElementById('hcActions').style.display = 'none';
 }
 
+let citas;
 async function buscarHC() {
     const cedula = parseInt(document.getElementById('cedulaConsultar').value);
     url='http://localhost:8080/paciente/obtener';
@@ -364,8 +363,10 @@ async function buscarHC() {
                 .then(
                     function(resultado)
                     {
-                        console.log(resultado);
+                        //console.log(resultado);
+                        citas = resultado;
                         document.getElementById('hcActions').style.display = 'block';
+                        
                     })
                 .catch(function(error){
                         console.error("EL error es: ",error);
@@ -390,7 +391,22 @@ function verHC() {
 }
 
 function eliminarHC() {
-    alert('Función de Eliminar HC no implementada aún.');
+   url = 'http://localhost:8080/cita/eliminar';
+   for (let i = 0; i < citas.length; i++) {
+    console.log(`Cita ${i+1}:`);
+    console.log(`Paciente: ${citas[i].paciente}`);
+    console.log(`Médico: ${citas[i].medico}`);
+    console.log(`Fecha: ${citas[i].fecha}`);
+    console.log(`Hora: ${citas[i].hora}`);
+    console.log(citas[i]);
+
+    peticion(url,citas[i])
+    .then(function(response){
+        console.log("cita eliminada: ", response);
+    }).catch(function(error){
+        console.error("el error al eliminar es: ", error);
+    })
+}
 }
 
 // Funciones para manejar la sección de ingresar documento para programar cita
@@ -467,7 +483,7 @@ async function submitProgramarCitaForm() {
             //data = {};
             //for(let [key, value] of Medico_datos.entries()){ if(key === "especializacion" && value === "general") { console.log(data[key] = value); } }
             const cita = {
-                fk_paciente: {pk_id_paciente: 123},
+                fk_paciente: {pk_id_paciente:Paciente_cedula},
                 fk_medico: {pk_id_medico: 1},
                 fk_programadorCitas: { pk_id_programadorCitas: 1},
                 fecha: fecha,

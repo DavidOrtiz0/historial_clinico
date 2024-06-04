@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "programadordecitas")
-public class Programadordecitas 
+public class Programadordecitas
 {
 
     @Id @Column(name = "pk_id_programadordecitas") private Long pk_id_programadordecitas;

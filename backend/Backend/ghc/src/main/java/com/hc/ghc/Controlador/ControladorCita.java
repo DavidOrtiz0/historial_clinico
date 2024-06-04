@@ -64,6 +64,7 @@ public class ControladorCita {
         repositorioCita.save(cita);
         return ResponseEntity.ok(true);
         }catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
         }
         
@@ -77,6 +78,14 @@ public class ControladorCita {
         if (!citas.isEmpty()) { System.out.println("las citas son: " + citas); return citas; } else { return null;}
     }
     
+    @PostMapping("/eliminar")
+    public String postMethodName(@RequestBody Cita entity) {
+        try{
+            repositorioCita.delete(entity);
+            return "cumplido";
+        }catch(Exception e){ return "algo salio mal"; }
+        
+    }
     
     
 }
